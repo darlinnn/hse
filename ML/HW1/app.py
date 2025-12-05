@@ -4,6 +4,7 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import numpy as np
 
 BASE_DIR = Path(__file__).parent
 
@@ -137,3 +138,19 @@ if uploaded_file is not None:
     if len(preds) > MAX_SHOW:
         st.info(f"Показаны первые {MAX_SHOW} записей из {len(preds)}.")
 
+st.subheader("Веса модели")
+coefs = np.ravel(model.coef_)
+coef_df = pd.DataFrame({
+    "feature": ohe_columns,
+    "coef": coefs,
+    "abs_coef": np.abs(coefs)
+}).sort_values("abs_coef", ascending=False)
+
+top_n = 40
+top_coef_df = coef_df.head(top_n)
+
+fig, ax = plt.subplots(figsize=(8, max(4, len(top_coef_df) * 0.3)))
+sns.barplot(data=top_coef_df, x="coef", y="feature", ax=ax)
+ax.axvline(0, linewidth=1)
+
+st.pyplot(fig)
