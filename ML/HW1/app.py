@@ -9,7 +9,7 @@ BASE_DIR = Path(__file__).parent
 
 @st.cache_resource
 def load_artifacts():
-    with open('model/ridge.pkl', 'rb') as f:
+    with open(BASE_DIR+'/model/ridge.pkl', 'rb') as f:
         artifacts_ = pickle.load(f)
     return artifacts_
 
@@ -29,7 +29,7 @@ st.markdown("""
 Ниже для иллюстрации представлена матрица корреляций между признаками
 """)
 
-with open('model/corr_matrix.pkl', 'rb') as f:
+with open(BASE_DIR+'model/corr_matrix.pkl', 'rb') as f:
     corr_matrix = pickle.load(f)
 
 sns.heatmap(corr_matrix, annot=True, cmap='coolwarm')
@@ -136,5 +136,4 @@ if uploaded_file is not None:
 
     if len(preds) > MAX_SHOW:
         st.info(f"Показаны первые {MAX_SHOW} записей из {len(preds)}.")
-
 
