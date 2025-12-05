@@ -1,9 +1,11 @@
+from pathlib import Path
 import pickle
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+BASE_DIR = Path(__file__).parent
 
 @st.cache_resource
 def load_artifacts():
@@ -134,4 +136,5 @@ if uploaded_file is not None:
 
     if len(preds) > MAX_SHOW:
         st.info(f"Показаны первые {MAX_SHOW} записей из {len(preds)}.")
+
 
